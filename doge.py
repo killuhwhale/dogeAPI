@@ -9,6 +9,7 @@ To run:
 import json
 import os
 import psycopg2
+import re
 import requests
 from datetime import datetime
 
