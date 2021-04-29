@@ -3,8 +3,11 @@
 # Task registed in Procfile
 dailyTask: python dogeCoinDailyTask.py
 
+# Worker for tasks
+worker: python worker.py
+
 
 # Deploy and update
-git add .
-git commit -m "_"
-git push heroku master
+git add .;
+git commit -m "_";
+git push heroku master;
