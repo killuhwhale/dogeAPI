@@ -7,29 +7,29 @@ To run:
 """
 
 import json
+import os
 import psycopg2
 import requests
 from datetime import datetime
 
+NAME = 'powerornahh'
+USER = 'powerornahh'
+PASS = 'mostdope'
+HOST = '127.0.0.1'
+PORT = '5432'
 
+if(os.environ['PWD'].find("app") >= 0):
+    db_url_pattern = """
+        postgres://(?P<user>\w*):(?P<pass>\w*)@(?P<host>[\w\-\.]*):(?P<port>\d*)\/(?P<name>\w*)
+    """
+    m = re.search(re.compile(db_url_pattern, re.MULTILINE | re.VERBOSE),
+                os.environ['DATABASE_URL'])
 
-
-
-
-
-"""
-TODO
-
-NEED to get ts to match form twitter and doge.
-
-Fix manually collected data, TS do not match with twitter.
-
-"""
-
-
-
-
-
+    NAME = m.group('name')
+    USER = m.group('user')
+    PASS = m.group('pass')
+    HOST = m.group('host')
+    PORT = m.group('port')
 
 
 
@@ -49,7 +49,7 @@ class Doge:
             )"""
         conn = None
         try:
-            conn = psycopg2.connect("dbname=powerornahh user=powerornahh")
+            conn = psycopg2.connect(f"dbname={NAME} user={USER}")
             # create a new cursor
             cur = conn.cursor()
             cur.execute(sql)
@@ -66,7 +66,7 @@ class Doge:
         sql = "INSERT INTO doge(ts, price) VALUES(%s, %s) ON CONFLICT DO NOTHING;"
         conn = None
         try:
-            conn = psycopg2.connect("dbname=powerornahh user=powerornahh")
+            conn = psycopg2.connect(f"dbname={NAME} user={USER}")
             # create a new cursor
             cur = conn.cursor()
             # execute the INSERT statement

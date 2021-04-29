@@ -14,6 +14,25 @@ import tweepy
 from datetime import datetime
 
 
+NAME = 'powerornahh'
+USER = 'powerornahh'
+PASS = 'mostdope'
+HOST = '127.0.0.1'
+PORT = '5432'
+
+if(os.environ['PWD'].find("app") >= 0):
+    db_url_pattern = """
+        postgres://(?P<user>\w*):(?P<pass>\w*)@(?P<host>[\w\-\.]*):(?P<port>\d*)\/(?P<name>\w*)
+    """
+    m = re.search(re.compile(db_url_pattern, re.MULTILINE | re.VERBOSE),
+                os.environ['DATABASE_URL'])
+
+    NAME = m.group('name')
+    USER = m.group('user')
+    PASS = m.group('pass')
+    HOST = m.group('host')
+    PORT = m.group('port')
+
 class Twitter:
     def __init__(self):
         """ Initializes twitter API authentication. """
@@ -86,7 +105,7 @@ class Twitter:
             )"""
         conn = None
         try:
-            conn = psycopg2.connect("dbname=powerornahh user=powerornahh")
+            conn = psycopg2.connect(f"dbname={NAME} user={USER}")
             # create a new cursor
             cur = conn.cursor()
             cur.execute(sql)
@@ -111,7 +130,7 @@ class Twitter:
         conn = None
         new_tweets = 0
         try:
-            conn = psycopg2.connect("dbname=powerornahh user=powerornahh")
+            conn = psycopg2.connect(f"dbname={NAME} user={USER}")
             # create a new cursor
             cur = conn.cursor()
             cur.execute(num_tweets_sql)

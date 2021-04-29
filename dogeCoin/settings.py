@@ -19,9 +19,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 """ Heroku environ var
-environ({'PYTHONUNBUFFERED': 'true', 'DATABASE_URL': 'postgres://tzhdkcpbdyhzon:0b9686a278
-8afa2c4445961a3a016901c2e352be41a4f742a74ca0da9aa07f0e@ec2-35-174-35-242.compute-1.amazonaws.com:5432/db0hn1c1j05m4l', 'PYTHONHASHSEED': 'random', 'PWD': '/app', 'PORT': '38731', 'GUNICORN_CMD_ARGS': '--access-logfile -', 'DYNO_RAM': '512', 'HOME': '/app', 'LANG': 'en_US.UTF-8', 'FORWARDED_ALLOW_IPS': '*', 'PYTHONPATH': '/app', 'DISABLE_COLLECTSTATIC': '1', 'PYTHONHOME': '/app/.heroku/python', 'LIBRARY_PATH': '/app/.heroku/vendor/lib:/app/.heroku/python/lib:', 'SHLVL': '0', 'WEB_CONCURRENCY': '3', 'LD_LIBRARY_PATH': '/app/.heroku/vendor/lib:/app/.heroku/python/lib:', 'PS1': '\\[\\033[01;34m\\]\\w\\[\\033[00m\\] \\[\\033[01;32m\\]$ \\[\\033[00m\\]', 'PATH': '/app/.heroku/python/bin:/usr/local/bin:/usr/bin:/bin', 'DYNO': 'web.1', '_': '/app/.heroku/python/bin/gunicorn', 'SERVER_SOFTWARE': 'gunicorn/20.1.0', 'DJANGO_SETTINGS_MODULE': 'dogeCoin.settings'})
+environ({'PYTHONUNBUFFERED': 'true', 'DATABASE_URL': 'postgres://tzhdkcpbdyhzon:0b9686a2788afa2c4445961a3a016901c2e352be41a4f742a74ca0da9aa07f0e@ec2-35-174-35-242.compute-1.amazonaws.com:5432/db0hn1c1j05m4l', 'PYTHONHASHSEED': 'random', 'PWD': '/app', 'PORT': '38731', 'GUNICORN_CMD_ARGS': '--access-logfile -', 'DYNO_RAM': '512', 'HOME': '/app', 'LANG': 'en_US.UTF-8', 'FORWARDED_ALLOW_IPS': '*', 'PYTHONPATH': '/app', 'DISABLE_COLLECTSTATIC': '1', 'PYTHONHOME': '/app/.heroku/python', 'LIBRARY_PATH': '/app/.heroku/vendor/lib:/app/.heroku/python/lib:', 'SHLVL': '0', 'WEB_CONCURRENCY': '3', 'LD_LIBRARY_PATH': '/app/.heroku/vendor/lib:/app/.heroku/python/lib:', 'PS1': '\\[\\033[01;34m\\]\\w\\[\\033[00m\\] \\[\\033[01;32m\\]$ \\[\\033[00m\\]', 'PATH': '/app/.heroku/python/bin:/usr/local/bin:/usr/bin:/bin', 'DYNO': 'web.1', '_': '/app/.heroku/python/bin/gunicorn', 'SERVER_SOFTWARE': 'gunicorn/20.1.0', 'DJANGO_SETTINGS_MODULE': 'dogeCoin.settings'})
 # a = 'postgres://tzhdkcpbdyhzon:0b9686a2788afa2c4445961a3a016901c2e352be41a4f742a74ca0da9aa07f0e@ec2-35-174-35-242.compute-1.amazonaws.com:5432/db0hn1c1j05m4l'
+Migrate commands
+pg_dump -C -h 127.0.0.1 -U powerornahh powerornahh | psql -h ec2-35-174-35-242.compute-1.amazonaws.com -U tzhdkcpbdyhzon db0hn1c1j05m4l
+pg_dump powerornahh > the_backup.sql
+psql the_new_dev_db < the_backup.sql
 """
 NAME = 'powerornahh'
 USER = 'powerornahh'
@@ -51,8 +54,6 @@ SECRET_KEY = 'django-insecure-4x6tc!%kz!@0u(c3^v8#9v9=v(y4nbqnmz4cu0ml*suw91$&9k
 DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "dogec01n.herokuapp.com"]
-
-
 # Application definition
 
 INSTALLED_APPS = [
