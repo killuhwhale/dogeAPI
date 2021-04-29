@@ -100,6 +100,7 @@ WSGI_APPLICATION = 'dogeCoin.wsgi.application'
 DATABASES = {
     'default': {
        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': USER,
         'USER': USER,
         'PASSWORD': PASS,
         'HOST': HOST,
