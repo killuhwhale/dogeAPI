@@ -55,7 +55,7 @@ class Doge:
             )"""
         conn = None
         try:
-            conn = psycopg2.connect(f"dbname={NAME} user={USER}")
+            conn = psycopg2.connect(f"dbname={NAME} user={USER} host={HOST} password={PASS} port={PORT}")
             # create a new cursor
             cur = conn.cursor()
             cur.execute(sql)
@@ -72,8 +72,7 @@ class Doge:
         sql = "INSERT INTO doge(ts, price) VALUES(%s, %s) ON CONFLICT DO NOTHING;"
         conn = None
         try:
-            conn = psycopg2.connect(f"dbname={NAME} user={USER}")
-            # create a new cursor
+            conn = psycopg2.connect(f"dbname={NAME} user={USER} host={HOST} password={PASS} port={PORT}")            # create a new cursor
             cur = conn.cursor()
             # execute the INSERT statement
             cur.executemany(sql,items)

@@ -110,7 +110,7 @@ class Twitter:
             )"""
         conn = None
         try:
-            conn = psycopg2.connect(f"dbname={NAME} user={USER}")
+            conn = psycopg2.connect(f"dbname={NAME} user={USER} host={HOST} password={PASS} port={PORT}")
             # create a new cursor
             cur = conn.cursor()
             cur.execute(sql)
@@ -135,7 +135,7 @@ class Twitter:
         conn = None
         new_tweets = 0
         try:
-            conn = psycopg2.connect(f"dbname={NAME} user={USER}")
+            conn = psycopg2.connect(f"dbname={NAME} user={USER} host={HOST} password={PASS} port={PORT}")
             # create a new cursor
             cur = conn.cursor()
             cur.execute(num_tweets_sql)
