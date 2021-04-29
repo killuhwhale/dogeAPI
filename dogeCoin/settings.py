@@ -11,15 +11,35 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+import re
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-print("Settings")
-print(os.environ)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+
+""" Heroku environ var
+environ({'PYTHONUNBUFFERED': 'true', 'DATABASE_URL': 'postgres://tzhdkcpbdyhzon:0b9686a2788afa2c4445961a3a016901c2e352be41a4f742a74ca0da9aa07f0e@ec2-35-174-35-242.compute-1.amazonaws.com:5432/db0hn1c1j05m4l', 'PYTHONHASHSEED': 'random', 'PWD': '/app', 'PORT': '38731', 'GUNICORN_CMD_ARGS': '--access-logfile -', 'DYNO_RAM': '512', 'HOME': '/app', 'LANG': 'en_US.UTF-8', 'FORWARDED_ALLOW_IPS': '*', 'PYTHONPATH': '/app', 'DISABLE_COLLECTSTATIC': '1', 'PYTHONHOME': '/app/.heroku/python', 'LIBRARY_PATH': '/app/.heroku/vendor/lib:/app/.heroku/python/lib:', 'SHLVL': '0', 'WEB_CONCURRENCY': '3', 'LD_LIBRARY_PATH': '/app/.heroku/vendor/lib:/app/.heroku/python/lib:', 'PS1': '\\[\\033[01;34m\\]\\w\\[\\033[00m\\] \\[\\033[01;32m\\]$ \\[\\033[00m\\]', 'PATH': '/app/.heroku/python/bin:/usr/local/bin:/usr/bin:/bin', 'DYNO': 'web.1', '_': '/app/.heroku/python/bin/gunicorn', 'SERVER_SOFTWARE': 'gunicorn/20.1.0', 'DJANGO_SETTINGS_MODULE': 'dogeCoin.settings'})
+# a = 'postgres://tzhdkcpbdyhzon:0b9686a2788afa2c4445961a3a016901c2e352be41a4f742a74ca0da9aa07f0e@ec2-35-174-35-242.compute-1.amazonaws.com:5432/db0hn1c1j05m4l'
+"""
+USER = 'powerornahh'
+PASS = 'mostdope'
+HOST = '127.0.0.1'
+PORT = '5432'
+
+if(os.environ['PWD'].find("app") >= 0):
+    db_url_pattern = """
+        postgres://(?P<user>\w*):(?P<pass>\w*)@(?P<host>[\w\-\.\:]*)\/(?P<port>\w*)
+    """
+    m = re.search(re.compile(db_url_pattern, re.MULTILINE | re.VERBOSE),
+                os.environ['DATABASE_URL'])
+
+    USER = m.group('user')
+    PASS = m.group('pass')
+    HOST = m.group('host')
+    PORT = m.group('port')
+
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-4x6tc!%kz!@0u(c3^v8#9v9=v(y4nbqnmz4cu0ml*suw91$&9k'
@@ -80,11 +100,10 @@ WSGI_APPLICATION = 'dogeCoin.wsgi.application'
 DATABASES = {
     'default': {
        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'powerornahh',
-        'USER': 'powerornahh',
-        'PASSWORD': 'mostdope',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'USER': USER,
+        'PASSWORD': PASS,
+        'HOST': HOST,
+        'PORT': PORT,
     }
 }
 
