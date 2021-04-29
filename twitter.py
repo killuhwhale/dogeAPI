@@ -14,9 +14,9 @@ import tweepy
 from datetime import datetime
 
 
-NAME = 'powerornahh'
-USER = 'powerornahh'
-PASS = 'mostdope'
+NAME = None
+USER = None
+PASS = None
 HOST = '127.0.0.1'
 PORT = '5432'
 
@@ -32,6 +32,11 @@ if(os.environ['PWD'].find("app") >= 0):
     PASS = m.group('pass')
     HOST = m.group('host')
     PORT = m.group('port')
+else:
+    NAME = os.environ['NAME']
+    USER = os.environ['USER']
+    PASS = os.environ['PASS']
+
 
 class Twitter:
     def __init__(self):

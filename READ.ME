@@ -6,8 +6,11 @@ dailyTask: python dogeCoinDailyTask.py
 # Worker for tasks
 worker: python worker.py
 
+View worker process output by filtering the
+logs with the -p flag and the name of the worker process type.
+        heroku logs -t -p worker
 
-# Deploy and update
+# Deploy and update to heroku
 git add .;
 git commit -m "_";
 git push heroku master;
