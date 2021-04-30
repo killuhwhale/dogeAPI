@@ -9,6 +9,7 @@ To run:
 import json
 import os
 import psycopg2
+import pytz
 import re
 import requests
 from datetime import datetime
@@ -19,6 +20,7 @@ USER = None
 PASS = None
 HOST = '127.0.0.1'
 PORT = '5432'
+_tz = pytz.timezone("America/Los_Angeles")
 
 if(os.environ['PWD'].find("app") >= 0):
     db_url_pattern = """
@@ -110,7 +112,9 @@ class Doge:
         self._create_table()
         price = self._get_latest_doge_price()
         today = datetime.now().date()
-        today_ts = int(datetime(today.year, today.month, today.day).timestamp())
+        today_ts = int(
+            _tz.localize(
+                datetime(today.year, today.month, today.day)).timestamp())
         self._insert_items([[today_ts, price]])
         print(f"Latest doge price: ${price}")
 

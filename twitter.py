@@ -9,6 +9,7 @@ To run:
 import os
 import pickle
 import psycopg2
+import pytz
 import re
 import tweepy
 from datetime import datetime
@@ -19,6 +20,7 @@ USER = None
 PASS = None
 HOST = '127.0.0.1'
 PORT = '5432'
+_tz = pytz.timezone("America/Los_Angeles")
 
 if(os.environ['PWD'].find("app") >= 0):
     db_url_pattern = """
@@ -91,10 +93,12 @@ class Twitter:
             if(doge_re.search(tweet.full_text)):
                 # Find timestamp of the day excluding time of day.
                 tweet_date = tweet.created_at.date()
-                tweet_date = int(datetime(
-                    tweet_date.year,
-                    tweet_date.month,
-                    tweet_date.day).timestamp())
+                tweet_date = int(
+                        _tz.localize(
+                            datetime(
+                                tweet_date.year,
+                                tweet_date.month,
+                                tweet_date.day)).timestamp())
 
                 filtered.append([tweet_date, tweet.full_text])
         print(f"Found {len(filtered)} tweets about doge.")
