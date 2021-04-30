@@ -1,0 +1,13 @@
+# Doge Coin Porject API
+
+
+# Built Using:
+- Django Restframework
+- Postgresql
+- Twitter API
+- Coinmarketcap API
+- Redis
+- APScheduler
+
+Gets tweets from Elon Musk about doge and the price(high) of doge each day.
+
