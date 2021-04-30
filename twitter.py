@@ -15,13 +15,14 @@ import tweepy
 from datetime import datetime
 
 
-NAME = None
-USER = None
-PASS = None
-HOST = '127.0.0.1'
-PORT = '5432'
+_NAME = None
+_USER = None
+_PASS = None
+_HOST = '127.0.0.1'
+_PORT = '5432'
 _tz = pytz.timezone("America/Los_Angeles")
 
+# Parses db url if running on heroku
 if(os.environ['PWD'].find("app") >= 0):
     db_url_pattern = """
         postgres://(?P<user>\w*):(?P<pass>\w*)@(?P<host>[\w\-\.]*):(?P<port>\d*)\/(?P<name>\w*)
@@ -29,15 +30,15 @@ if(os.environ['PWD'].find("app") >= 0):
     m = re.search(re.compile(db_url_pattern, re.MULTILINE | re.VERBOSE),
                 os.environ['DATABASE_URL'])
 
-    NAME = m.group('name')
-    USER = m.group('user')
-    PASS = m.group('pass')
-    HOST = m.group('host')
-    PORT = m.group('port')
+    _NAME = m.group('name')
+    _USER = m.group('user')
+    _PASS = m.group('pass')
+    _HOST = m.group('host')
+    _PORT = m.group('port')
 else:
-    NAME = os.environ['NAME']
-    USER = os.environ['USER']
-    PASS = os.environ['PASS']
+    _NAME = os.environ['NAME']
+    _USER = os.environ['USER']
+    _PASS = os.environ['PASS']
 
 
 class Twitter:
@@ -68,7 +69,7 @@ class Twitter:
             self._api.user_timeline,
             screen_name="elonmusk",
             count=50,
-            tweet_mode="extended").pages(1)):
+            tweet_mode="extended").pages(2)):
             print(f"Page num: {page_num}")
             for status in page:
                 tweets.append(status)
@@ -114,7 +115,7 @@ class Twitter:
             )"""
         conn = None
         try:
-            conn = psycopg2.connect(f"dbname={NAME} user={USER} host={HOST} password={PASS} port={PORT}")
+            conn = psycopg2.connect(f"dbname={_NAME} user={_USER} host={_HOST} password={_PASS} port={_PORT}")
             # create a new cursor
             cur = conn.cursor()
             cur.execute(sql)
@@ -139,7 +140,7 @@ class Twitter:
         conn = None
         new_tweets = 0
         try:
-            conn = psycopg2.connect(f"dbname={NAME} user={USER} host={HOST} password={PASS} port={PORT}")
+            conn = psycopg2.connect(f"dbname={_NAME} user={_USER} host={_HOST} password={_PASS} port={_PORT}")
             # create a new cursor
             cur = conn.cursor()
             cur.execute(num_tweets_sql)

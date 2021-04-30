@@ -1,3 +1,8 @@
+""" Worker to run tasks using redis.
+
+Started via Procfile entry which is used by Heroku to start a process for this file.
+Process queue filled by the Scheduler in dogeCoinDailyTasks.py.
+"""
 import os
 import re
 import redis
